@@ -12,13 +12,13 @@ class BasePolicy:
 
     Two override points — implement whichever suits your algorithm:
 
-      plan(agent, dt)  →  List[waypoints] | None
+      plan(agent, dt)  ->  List[waypoints] | None
           Path-planning algorithms (A*, RRT, DWA, …) override this.
           Return world-coordinate (x, y) waypoints; the default act()
           will follow them using waypoint-following control.
           Return None to keep the current path unchanged.
 
-      act(agent, dt)  →  ndarray(vx, vy)
+      act(agent, dt)  ->  ndarray(vx, vy)
           Direct-control algorithms (RL, APF reactive, …) override this.
           Return the desired velocity vector; no waypoints needed.
           The default implementation calls plan() when the path is empty

@@ -13,7 +13,7 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MapBuilderWindow(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, ignore_validity=False):
         super(MapBuilderWindow, self).__init__(parent)
         uic.loadUi(os.path.join(CURRENT_DIR, "map_builder.ui"), self)
 
@@ -22,6 +22,7 @@ class MapBuilderWindow(QMainWindow):
 
         # Variables
         self.current_map: BaseMap = None
+        self.ignore_validity = ignore_validity
         self.object_selected: ObjectMarker = ObjectMarker.OBSTACLE
 
         # Actions
@@ -134,12 +135,15 @@ class MapBuilderWindow(QMainWindow):
         if not self.check_map_loaded():
             return
         if not self.current_map.check_validity(print_issues=False):
-            QMessageBox.warning(self,
-                                "Invalid Map",
-                                "The current map is invalid and cannot be saved. Please check the debug log for details.",
-                                QMessageBox.Ok)
-            self.log_debug("Save operation aborted: Map is invalid.")
-            return
+            if self.ignore_validity:
+                self.log_debug("Warning: Map is invalid, but --ignore-validity is set. Proceeding with save.")
+            else:
+                QMessageBox.warning(self,
+                                    "Invalid Map",
+                                    "The current map is invalid and cannot be saved. Please check the debug log for details.",
+                                    QMessageBox.Ok)
+                self.log_debug("Save operation aborted: Map is invalid.")
+                return
         
         if self.current_map.map_type == MapType.TEMPLATE:
             QMessageBox.warning(self,

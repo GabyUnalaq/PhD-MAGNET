@@ -29,7 +29,7 @@ def main():
         sys.exit(app.exec_())
 
     # Build RunConfig from the map's linked pairs
-    # linked_points: [gx=row, gy=col, gx2, gy2]  →  world: x=col, y=row
+    # linked_points: [gx=row, gy=col, gx2, gy2]  ->  world: x=col, y=row
     agents = [
         AgentConfig(
             agent_type="SimpleAgent",

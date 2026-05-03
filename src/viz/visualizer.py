@@ -216,7 +216,7 @@ class VisualizerWindow(QMainWindow):
         self._pathLabel.setText(os.path.basename(path))
         self._spinAgents.setRange(1, max(1, n_pairs))
         self._spinAgents.setValue(n_pairs)
-        self.log(f"Map loaded: {grid_map.name}  ({grid_map.size[0]}×{grid_map.size[1]})  |  {n_pairs} pair(s)")
+        self.log(f"Map loaded: {grid_map.name}  ({grid_map.size[0]}x{grid_map.size[1]})  |  {n_pairs} pair(s)")
 
     # ── Toolbar action slots ──────────────────────────────────────────────────
 
@@ -270,7 +270,7 @@ class VisualizerWindow(QMainWindow):
             QMessageBox.critical(self, "Save Error", f"Failed to save run:\n{e}")
             return
 
-        self.log(f"Run saved → {os.path.basename(path)}")
+        self.log(f"Run saved -> {os.path.basename(path)}")
         self._textBrowser.setPlainText(run.summary())
 
     def _on_fit_view(self):
